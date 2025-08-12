@@ -1,0 +1,309 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>SparkShot by SparkFusion Marketing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-deep:#014766;
+    --brand-accent:#0D7DFD;
+    --brand-light:#CFE9F4;
+    --text:#0b0b0b;
+    --bg:#ffffff;
+    --card:#ffffff;
+    --muted:#f3f5f7;
+    --border:#ececec;
+    --progress-track:#CFE9F4;
+    --secondary:#173A4C; /* unified secondary */
+  }
+  .dark{
+    --brand-deep:#0E3041;
+    --brand-accent:#0D7DFD;
+    --brand-light:#173A4C;
+    --text:#E9EEF2;
+    --bg:#0B1A22;
+    --card:#0F232D;
+    --muted:#0F1F28;
+    --border:#113243;
+    --progress-track:#163443;
+    --secondary:#173A4C; /* same in dark */
+  }
+  .dark h2 { color: #ffffff !important; }
+  .dark .hint, .dark .hint.light { color: #ffffff !important; }
+
+  html, body { height: 100%; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+
+  .header { background: var(--brand-deep); color:#fff; padding: 14px 18px; display:flex; align-items:center; gap:14px; }
+  .header img { height:34px; display:block; }
+  .title { font-family: "Bebas Neue", sans-serif; letter-spacing: 0.5px; font-size: 28px; line-height: 1; margin-top: 2px; }
+  .spacer { flex:1; }
+  .theme { display:flex; align-items:center; gap:8px; font-size:12px; }
+  .theme select{
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: rgba(255,255,255,0.14) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.40);
+    border-radius: 8px;
+    padding: 6px 28px 6px 8px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"white\"><path d=\"M7 10l5 5 5-5z\"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+  }
+  .theme select:hover{ border-color: rgba(255,255,255,0.65); }
+  .theme select:focus{ outline: none; box-shadow: 0 0 0 2px rgba(255,255,255,0.25); }
+  .theme select option{ color:#000; background:#fff; }
+  .dark .theme select option{ color:#fff; background:#0F232D; }
+
+  .wrap { padding: 18px; }
+  h2 { margin: 0 0 6px 0; font-family: "Bebas Neue", sans-serif; letter-spacing: 0.5px; color: var(--brand-deep); }
+  .hint { color: #aab4bb; font-size: 12px; margin-top: 2px; }
+  .hint.light { color:#444; }
+
+  textarea { width: 100%; height: 160px; box-sizing: border-box; padding:10px 12px; border:1px solid var(--border); border-radius:10px; outline:none; background: var(--card); color: var(--text); }
+  textarea:focus { border-color: var(--brand-accent); box-shadow: 0 0 0 3px rgba(13,125,253,0.18); }
+
+  button { padding: 10px 14px; cursor: pointer; border: none; border-radius: 10px; background: var(--brand-accent); color:#fff; font-weight:600; }
+  button[disabled] { opacity: .6; cursor: not-allowed; }
+  button:hover { filter: brightness(0.96); }
+
+  /* unified secondary buttons */
+  .btn-secondary { background: var(--secondary) !important; color: #fff; }
+  .btn-secondary:hover { filter: brightness(1.05); }
+
+  .row { margin: 12px 0; display:flex; gap:10px; flex-wrap: wrap; }
+  .row-run { margin-top: 8px; justify-content: flex-end; }
+  .row-secondary { margin-top: 18px; gap: 8px; justify-content: center; } /* centered */
+  .card { background: var(--card); border:1px solid var(--border); border-radius: 12px; padding: 14px; }
+
+  .run { min-width: 120px; font-size: 16px; }
+
+  /* compact secondary buttons */
+  .btn-secondary.sm { padding: 6px 10px; font-size: 12px; border-radius: 8px; white-space: nowrap; }
+
+  pre { white-space: pre-wrap; background: var(--muted); border:1px solid var(--border); padding: 12px; height: 180px; overflow: auto; border-radius: 10px; color: var(--text); }
+  .progress-wrap { background: var(--progress-track); height: 12px; border-radius: 6px; overflow: hidden; }
+  .progress-bar { width: 0%; height: 100%; background: var(--brand-accent); transition: width 0.2s linear; }
+  .progress-text { font-size: 12px; color: var(--text); margin-top: 6px; }
+  #toast { position: fixed; right: 16px; bottom: 16px; background: var(--brand-deep); color: #fff; padding: 10px 14px; border-radius: 10px; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+  #toast.show { opacity: 1; }
+
+  .footer { margin: 20px 18px; font-size: 12px; display:flex; align-items:center; gap:6px; opacity:.85; }
+  .footer a { color: var(--brand-accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  .drop-hint { font-size:12px; opacity:.75; }
+</style>
+
+<div class="header">
+  <img src="assets/logomark-white.png" alt="SparkFusion Marketing">
+  <div class="title">SparkShot</div>
+  <div class="spacer"></div>
+  <div class="theme">
+    <span>Theme</span>
+    <select id="themeSel">
+      <option value="system">System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+</div>
+
+<div class="wrap">
+  <h2>Capture website screenshots</h2>
+  <p class="hint light">Enter one URL per line. Click Run. Desktop and mobile PNGs will save to the screens folder.</p>
+
+  <div class="row">
+    <textarea id="urls" placeholder="Add URLs Here"></textarea>
+    <div class="drop-hint">Tip: drop a .txt file here to load URLs.</div>
+  </div>
+
+  <!-- Run button on its own row, aligned right -->
+  <div class="row row-run">
+    <button id="go" class="run">Run</button>
+  </div>
+
+  <!-- Secondary controls in one compact centered row -->
+  <div class="row row-secondary">
+    <button class="btn-secondary sm" id="open">Open Screens Folder</button>
+    <button class="btn-secondary sm" id="openLogs">Open Logs Folder</button>
+    <button class="btn-secondary sm" id="import">Import URLs</button>
+    <button class="btn-secondary sm" id="export">Export URLs</button>
+    <button class="btn-secondary sm" id="check">Check Updates</button>
+    <span id="update" class="hint"></span>
+  </div>
+
+  <div class="row card" style="flex-direction:column; gap:8px;">
+    <div class="progress-wrap"><div id="bar" class="progress-bar"></div></div>
+    <div id="progressText" class="progress-text">Idle</div>
+  </div>
+
+  <div class="row">
+    <pre id="log"></pre>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Made by</span>
+  <a href="#" id="madeLink">SparkFusion Marketing</a>
+</div>
+
+<div id="toast">All done</div>
+
+<script>
+const urlsEl = document.getElementById('urls');
+const goBtn = document.getElementById('go');
+const openBtn = document.getElementById('open');
+const openLogsBtn = document.getElementById('openLogs');
+const importBtn = document.getElementById('import');
+const exportBtn = document.getElementById('export');
+const checkBtn = document.getElementById('check');
+const logEl = document.getElementById('log');
+const bar = document.getElementById('bar');
+const ptxt = document.getElementById('progressText');
+const toast = document.getElementById('toast');
+const updateEl = document.getElementById('update');
+const themeSel = document.getElementById('themeSel');
+
+let running = false;
+
+// ---- Theme selector ----
+const THEME_KEY = 'sparkshot.theme.mode';
+const media = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+function applyTheme(mode) {
+  let final = mode;
+  if (mode === 'system') final = media && media.matches ? 'dark' : 'light';
+  document.body.classList.toggle('dark', final === 'dark');
+  themeSel.value = mode;
+}
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY) || 'system';
+  applyTheme(saved);
+  if (media) media.addEventListener('change', () => {
+    if ((localStorage.getItem(THEME_KEY) || 'system') === 'system') applyTheme('system');
+  });
+}
+themeSel.addEventListener('change', () => {
+  const v = themeSel.value;
+  localStorage.setItem(THEME_KEY, v);
+  applyTheme(v);
+});
+initTheme();
+
+// ---- Drag & drop .txt ----
+urlsEl.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect='copy'; });
+urlsEl.addEventListener('drop', async (e) => {
+  e.preventDefault();
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (!f) return;
+  const res = await window.api.importFromPath(f.path || f.name);
+  if (res && res.text) {
+    const add = res.text.replace(/\r\n/g, '\n').trim();
+    const existing = urlsEl.value.trim();
+    urlsEl.value = existing ? (existing + '\n' + add) : add;
+  }
+});
+
+// ---- Footer link ----
+document.getElementById('madeLink').onclick = (e) => {
+  e.preventDefault();
+  window.api.openExternal('https://www.fusewithspark.com');
+};
+
+// ---- Progress ----
+window.api.onProgress((data) => {
+  if (!data) return;
+  if (data.status === 'starting') {
+    updateProgress(data.step, data.total, 'Working on ' + data.url);
+  } else if (data.status === 'done') {
+    appendLog('Done ' + data.url);
+    if (data.desktopFile) appendLog('Saved ' + data.desktopFile);
+    if (data.mobileFile) appendLog('Saved ' + data.mobileFile);
+    updateProgress(data.step, data.total, 'Completed ' + data.url);
+  } else if (data.status === 'error') {
+    appendLog('Error ' + data.url + ' -> ' + data.error);
+    updateProgress(data.step, data.total, 'Error on ' + data.url);
+  } else if (data.status === 'all-done') {
+    if (data.logPath) appendLog('Log saved: ' + data.logPath);
+    showToast();
+    updateProgress(data.total, data.total, 'All done');
+    urlsEl.value = ''; // clear after run
+    setRunning(false);
+  } else if (data.status === 'update-available') {
+    updateEl.textContent = 'Update available. Downloading...';
+  } else if (data.status === 'update-downloaded') {
+    updateEl.textContent = 'Update ready. Click prompt to install.';
+  }
+});
+
+// ---- Actions ----
+goBtn.onclick = async () => {
+  const urls = parseUrls(urlsEl.value);
+  if (urls.length === 0 || running) return;
+  logEl.textContent = 'Starting... (' + urls.length + ' URL' + (urls.length>1?'s':'') + ')';
+  updateProgress(0, urls.length, 'Starting');
+  setRunning(true);
+  try {
+    const out = await window.api.shoot(urls);
+    appendLog(out);
+  } catch (e) {
+    appendLog('Failed: ' + e.toString());
+  } finally {
+    setRunning(false);
+  }
+};
+openBtn.onclick = async () => { if (!running) await window.api.openScreens(); };
+openLogsBtn.onclick = async () => { if (!running) await window.api.openLogs(); };
+importBtn.onclick = async () => {
+  const res = await window.api.importUrls();
+  if (res && res.text) {
+    const add = res.text.replace(/\r\n/g, '\n').trim();
+    const existing = urlsEl.value.trim();
+    urlsEl.value = existing ? (existing + '\n' + add) : add;
+  }
+};
+exportBtn.onclick = async () => {
+  await window.api.exportUrls(urlsEl.value || '');
+};
+checkBtn.onclick = async () => {
+  updateEl.textContent = 'Checking for updates...';
+  try {
+    const ok = await window.api.checkUpdates();
+    if (!ok) updateEl.textContent = 'Update check failed.';
+  } catch {
+    updateEl.textContent = 'Update check failed.';
+  }
+};
+
+// ---- Helpers ----
+function setRunning(v) {
+  running = v;
+  goBtn.disabled = v;
+  openBtn.disabled = v;
+  openLogsBtn.disabled = v;
+  importBtn.disabled = v;
+  exportBtn.disabled = v;
+  checkBtn.disabled = v;
+  urlsEl.disabled = v;
+}
+function parseUrls(text) {
+  return text.split(/\r?\n|,|\s+/)
+    .map(s => s.trim())
+    .filter(Boolean)
+    .map(u => /^https?:\/\//i.test(u) ? u : `https://${u}`);
+}
+function updateProgress(step, total, text) {
+  const pct = total === 0 ? 0 : Math.round((step / total) * 100);
+  bar.style.width = pct + '%';
+  ptxt.textContent = text + '  ' + pct + '%';
+}
+function appendLog(msg) {
+  logEl.textContent += (logEl.textContent ? '\n' : '') + msg;
+  logEl.scrollTop = logEl.scrollHeight;
+}
+function showToast() {
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
+}
+</script>
