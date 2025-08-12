@@ -13,7 +13,11 @@
     --muted:#f3f5f7;
     --border:#ececec;
     --progress-track:#CFE9F4;
+<<<<<<< HEAD
     --secondary:#173A4C;
+=======
+    --secondary:#173A4C; /* unified secondary */
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   }
   .dark{
     --brand-deep:#0E3041;
@@ -25,7 +29,11 @@
     --muted:#0F1F28;
     --border:#113243;
     --progress-track:#163443;
+<<<<<<< HEAD
     --secondary:#173A4C;
+=======
+    --secondary:#173A4C; /* same in dark */
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   }
   .dark h2 { color: #ffffff !important; }
   .dark .hint, .dark .hint.light { color: #ffffff !important; }
@@ -68,16 +76,29 @@
   button[disabled] { opacity: .6; cursor: not-allowed; }
   button:hover { filter: brightness(0.96); }
 
+<<<<<<< HEAD
   .btn-secondary { background: var(--secondary) !important; color:#fff; }
+=======
+  /* unified secondary buttons */
+  .btn-secondary { background: var(--secondary) !important; color: #fff; }
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   .btn-secondary:hover { filter: brightness(1.05); }
 
   .row { margin: 12px 0; display:flex; gap:10px; flex-wrap: wrap; }
   .row-run { margin-top: 8px; justify-content: flex-end; }
+<<<<<<< HEAD
   .row-secondary { margin-top: 18px; gap: 8px; justify-content: center; }
+=======
+  .row-secondary { margin-top: 18px; gap: 8px; justify-content: center; } /* centered */
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   .card { background: var(--card); border:1px solid var(--border); border-radius: 12px; padding: 14px; }
 
   .run { min-width: 120px; font-size: 16px; }
 
+<<<<<<< HEAD
+=======
+  /* compact secondary buttons */
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   .btn-secondary.sm { padding: 6px 10px; font-size: 12px; border-radius: 8px; white-space: nowrap; }
 
   pre { white-space: pre-wrap; background: var(--muted); border:1px solid var(--border); padding: 12px; height: 180px; overflow: auto; border-radius: 10px; color: var(--text); }
@@ -92,11 +113,14 @@
   .footer a:hover { text-decoration: underline; }
 
   .drop-hint { font-size:12px; opacity:.75; }
+<<<<<<< HEAD
 
   /* updater status chip */
   .status { font-size: 12px; padding: 6px 10px; border-radius: 999px; background: #eef5ff; color: #0E3041; }
   .dark .status { background: #103446; color: #E9EEF2; }
   .status a { color: inherit; text-decoration: underline; }
+=======
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
 </style>
 
 <div class="header">
@@ -122,17 +146,29 @@
     <div class="drop-hint">Tip: drop a .txt file here to load URLs.</div>
   </div>
 
+<<<<<<< HEAD
+=======
+  <!-- Run button on its own row, aligned right -->
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   <div class="row row-run">
     <button id="go" class="run">Run</button>
   </div>
 
+<<<<<<< HEAD
+=======
+  <!-- Secondary controls in one compact centered row -->
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   <div class="row row-secondary">
     <button class="btn-secondary sm" id="open">Open Screens Folder</button>
     <button class="btn-secondary sm" id="openLogs">Open Logs Folder</button>
     <button class="btn-secondary sm" id="import">Import URLs</button>
     <button class="btn-secondary sm" id="export">Export URLs</button>
     <button class="btn-secondary sm" id="check">Check Updates</button>
+<<<<<<< HEAD
     <span id="update" class="status"></span>
+=======
+    <span id="update" class="hint"></span>
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   </div>
 
   <div class="row card" style="flex-direction:column; gap:8px;">
@@ -169,7 +205,11 @@ const themeSel = document.getElementById('themeSel');
 
 let running = false;
 
+<<<<<<< HEAD
 // Theme selector
+=======
+// ---- Theme selector ----
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
 const THEME_KEY = 'sparkshot.theme.mode';
 const media = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
 function applyTheme(mode) {
@@ -192,7 +232,11 @@ themeSel.addEventListener('change', () => {
 });
 initTheme();
 
+<<<<<<< HEAD
 // Drag & drop .txt
+=======
+// ---- Drag & drop .txt ----
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
 urlsEl.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect='copy'; });
 urlsEl.addEventListener('drop', async (e) => {
   e.preventDefault();
@@ -206,12 +250,17 @@ urlsEl.addEventListener('drop', async (e) => {
   }
 });
 
+<<<<<<< HEAD
 // Footer link
+=======
+// ---- Footer link ----
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
 document.getElementById('madeLink').onclick = (e) => {
   e.preventDefault();
   window.api.openExternal('https://www.fusewithspark.com');
 };
 
+<<<<<<< HEAD
 // Updater status helpers
 function releasesLink(label='View Releases') {
   const a = document.createElement('a');
@@ -229,6 +278,9 @@ function setStatus(text, withLink=false) {
 }
 
 // Progress
+=======
+// ---- Progress ----
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
 window.api.onProgress((data) => {
   if (!data) return;
   if (data.status === 'starting') {
@@ -245,6 +297,7 @@ window.api.onProgress((data) => {
     if (data.logPath) appendLog('Log saved: ' + data.logPath);
     showToast();
     updateProgress(data.total, data.total, 'All done');
+<<<<<<< HEAD
     urlsEl.value = '';
     setRunning(false);
   } else if (data.status === 'update-checking') {
@@ -280,6 +333,18 @@ checkBtn.onclick = async () => {
   }
 };
 
+=======
+    urlsEl.value = ''; // clear after run
+    setRunning(false);
+  } else if (data.status === 'update-available') {
+    updateEl.textContent = 'Update available. Downloading...';
+  } else if (data.status === 'update-downloaded') {
+    updateEl.textContent = 'Update ready. Click prompt to install.';
+  }
+});
+
+// ---- Actions ----
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
 goBtn.onclick = async () => {
   const urls = parseUrls(urlsEl.value);
   if (urls.length === 0 || running) return;
@@ -308,8 +373,22 @@ importBtn.onclick = async () => {
 exportBtn.onclick = async () => {
   await window.api.exportUrls(urlsEl.value || '');
 };
+<<<<<<< HEAD
 
 // Helpers
+=======
+checkBtn.onclick = async () => {
+  updateEl.textContent = 'Checking for updates...';
+  try {
+    const ok = await window.api.checkUpdates();
+    if (!ok) updateEl.textContent = 'Update check failed.';
+  } catch {
+    updateEl.textContent = 'Update check failed.';
+  }
+};
+
+// ---- Helpers ----
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
 function setRunning(v) {
   running = v;
   goBtn.disabled = v;

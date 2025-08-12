@@ -1,6 +1,10 @@
 {
   "name": "sparkshot",
+<<<<<<< HEAD
   "version": "1.3.2",
+=======
+  "version": "1.3.0",
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
   "author": "Garrett Hoffman, Chief Spark Officer at SparkFusion Marketing",
   "description": "SparkShot captures desktop and mobile full page screenshots from any URL.",
   "type": "module",
@@ -59,4 +63,8 @@
       "entitlementsInherit": "entitlements.mac.plist"
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 784a7264a92e4be797329afadfd5d8028025a143
